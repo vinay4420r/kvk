@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+    <link rel="stylesheet" href="cart.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <h1 class="title">Your Cart</h1>
+    <div id="cartItems" class="cartitems"></div>
+    <div class="cart-summary">
+        <h3 style="text-align: center;">Total Price: <span id="totalPrice">0/-</span></h3>
+    </div>
+    <button id="checkoutBtn" class="checkout">Checkout</button>
+
+    <script>
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const cartItemsDiv = document.getElementById("cartItems");
+        const totalPriceEl = document.getElementById("totalPrice");
+
+        // Function to display cart items
+        function displayCartItems() {
+            cartItemsDiv.innerHTML = ''; // Clear cart items display
+
+            let totalPrice = 0;
+            if (cart.length === 0) {
+                cartItemsDiv.innerHTML = "<p>Your cart is empty</p>";
+            } else {
+                cart.forEach((item, index) => {
+                    const price = parseFloat(item.price.replace(/[^\d.-]/g, '')); // Remove currency symbol
+                    const itemTotal = price * item.quantity;
+                    totalPrice += itemTotal;
+
+                    const itemDiv = document.createElement("div");
+                    itemDiv.classList.add("cart-item");
+
+                    itemDiv.innerHTML = `
+                        <img src="${item.image}" alt="${item.name}" style="width:100px;">
+                        <p class="product">Product Name: ${item.name}</p>
+                        <p class="price">Price: <strong>${itemTotal.toFixed(2)}/-</strong></p>
+                        <p class="size">Size: ${item.size}</p>
+                        <p class="quantity">Quantity: ${item.quantity}</p>
+                        <button class="remove-btn" data-index="${index}"><i class="material-icons">delete</i></button>
+                    `;
+
+                    cartItemsDiv.appendChild(itemDiv);
+                });
+
+                // Update total price
+                totalPriceEl.textContent = `${totalPrice.toFixed(2)}`;
+
+                // Add event listeners for remove buttons
+                document.querySelectorAll('.remove-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const index = this.getAttribute('data-index');
+                        removeItemFromCart(index);
+                    });
+                });
+            }
+        }
+
+        // Function to remove an item from the cart
+        function removeItemFromCart(index) {
+            cart.splice(index, 1);
+            localStorage.setItem("cart", JSON.stringify(cart));
+            displayCartItems(); // Re-render the cart
+        }
+
+        // Initial display of cart items
+        displayCartItems();
+
+        // Checkout button logic
+        document.getElementById("checkoutBtn").addEventListener("click", function() {
+            if (cart.length > 0) {
+                const checkoutItems = cart.map(item => ({
+                    name: item.name,
+                    size: item.size,
+                    quantity: item.quantity,
+                    totalPrice: parseFloat(item.price.replace(/[^\d.-]/g, '')) * item.quantity
+                }));
+
+                sessionStorage.setItem("checkoutItems", JSON.stringify(checkoutItems));
+
+                // Navigate to the checkout page
+                window.location.href = "checkout.php";
+            } else {
+                alert("Your cart is empty!");
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KVK Hoodie</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="view.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="top-color">
+        <img src="https://res.cloudinary.com/dewraqoty/image/upload/v1727676652/logo2_shtdib.png" class="logo" style="width: fit-content;">
+        <div class="search-container">
+            <h1 class="tagline">CREATE YOUR STYLE WITH US</h1>
+            <input type="text" id="searchBar" placeholder="Search here..." class="search"/>
+            <button onclick="performSearch()" class="searchbutton">Search</button>
+        </div>
+        <a href="cart.html">
+        <button class="viewcartbtn">VIEW CART 
+            <i class="fa fa-shopping-cart" style="font-size:24px; color: white;"></i>
+        </button>
+        </a>
+        </div>
+        <div class="card-wrapper">
+            <div class="card">
+              <div class="product-imgs">
+                <div class="img-display">
+                 <div class="img-showcase">
+                  <img src="https://res.cloudinary.com/dewraqoty/image/upload/v1727677712/RSK_6359_umlyjz.jpg" alt="shirt">
+                  <img src="https://res.cloudinary.com/dewraqoty/image/upload/v1727699069/RSK_6361_w5l3tf.jpg" alt="shirt">
+                  <img src="https://res.cloudinary.com/dewraqoty/image/upload/v1727699143/RSK_6362_boiswc.jpg" alt="shirt">
+                  <img src="https://res.cloudinary.com/dewraqoty/image/upload/v1727699147/RSK_6370_oj7xzb.jpg" alt="shirt">
+                 </div>  
+                </div>
+                <div class="img-select">
+                  <div class="img-item">
+                    <a href="#" data-id="1"> <img src="https://res.cloudinary.com/dewraqoty/image/upload/v1727677712/RSK_6359_umlyjz.jpg"></a>
+                  </div>
+                  <div class="img-item">
+                    <a href="#" data-id="2"> <img src="https://res.cloudinary.com/dewraqoty/image/upload/v1727699069/RSK_6361_w5l3tf.jpg"></a>
+                  </div>
+                  <div class="img-item">
+                    <a href="#" data-id="3"> <img src="https://res.cloudinary.com/dewraqoty/image/upload/v1727699143/RSK_6362_boiswc.jpg"></a>
+                  </div>
+                  <div class="img-item">
+                    <a href="#" data-id="4"> <img src="https://res.cloudinary.com/dewraqoty/image/upload/v1727699147/RSK_6370_oj7xzb.jpg"></a>
+                  </div>
+                </div>
+              </div>
+              <!--card right-->
+              <div class="product-content">
+                <h2 class="product-title">PINK SHIRT</h2>
+               <div class="product-price">
+                <p class="last-price">Old Price : <span>899/-</span></p>
+                <p class="new-price">New Price : <span>799/-</span></p>
+               </div>
+               <div class="product-details">
+                <h2>About this item</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis eos exercitationem rem, est maiores corrupti doloribus pariatur a ratione voluptatum, quidem voluptatem ullam veniam blanditiis, consequatur repellendus dolorem reprehenderit nemo.</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis eos exercitationem rem, est maiores corrupti doloribus pariatur a ratione voluptatum, quidem voluptatem ullam veniam blanditiis, consequatur repellendus dolorem reprehenderit nemo.</p>
+                <ul>
+                  <li>✔ Color : <span>pink</span></li>
+                  <li>✔ Available: <span>in stock</span></li>
+                  <li>✔ Category : <span>Shirt</span></li>
+                  <li>✔ Shipping Area : <span>All over India</span></li>
+                  <li>✔ Shipping Fee : <span>Free</span></li>
+                </ul>
+               </div>
+               <div class="purchase-info">
+                <label for="size">Choose Size:</label>
+                <select id="size">
+                    <option value="S">S</option>
+                    <option value="M">M</option>
+                    <option value="L">L</option>
+                    <option value="XL">XL</option>
+                </select>
+                <input type="number" min="1" value="1" id="quantity">
+                <button type="button" class="btn1" id="addToCartBtn">
+                    Add to Cart <i class="fas fa-shopping-cart"></i>
+                </button>
+                <button id="buyNow">Buy Now</button>
+          
+               </div>
+              </div>
+            </div>
+          </div>
+ <script src="script.js"></script>
+ <script src="desktop.js"></script>
+ <script src="product.js"></script>
+ <script>
+      document.getElementById('buyNow').addEventListener('click', function () {
+            const productName = document.querySelector('.product-title').textContent; // Dynamically fetch product name
+            const productSize = document.getElementById('size').value;
+            const productQuantity = document.getElementById('quantity').value;
+
+            if (!size || quantity <= 0) {
+                alert("Please select a size and a valid quantity.");
+                return;
+            }
+
+            const productDetails = {
+                name: productName,
+                size: productSize,
+                quantity: productQuantity
+            };
+
+            // Save product details to session storage
+            sessionStorage.setItem('checkoutProduct', JSON.stringify(productDetails));
+
+            // Redirect to checkout page
+            window.location.href = 'buy.php';
+        });
+ </script>
+</body>
+</html>
